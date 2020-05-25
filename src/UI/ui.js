@@ -38,7 +38,8 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import Button from "@material-ui/core/Button";
 import ShareIcon from "@material-ui/icons/Share";
 import { tronAddress } from "../components/TronLinkInfo";
-import QRcodeReader from "../components/qrcodeReader/codeReader.js";
+import DLiveStaking from "../components/charts/charts.js";
+//import QRcodeReader from "../components/qrcodeReader/codeReader.js";
 import BTTlogo from "../components/files/bttscanlogo.png";
 //import QRcode from '../components/receiveBooks/qrcode_gen.js
 
@@ -145,7 +146,7 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h4" noWrap>
+          <Typography variant="h5" noWrap>
             <img src={BTTlogo} width="50" height="50" />
             BitTorrent Scan
           </Typography>
@@ -170,7 +171,7 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </div>
         <Divider />
-        <List component="nav" aria-label="main liverum menus">
+        <List component="nav" aria-label="main bttscan menus">
           <ListItem
             button
             selected={selectedIndex === 0}
@@ -203,7 +204,7 @@ export default function PersistentDrawerLeft() {
             <ListItemText primary="TRON Stats" />
           </ListItem>
 
-        
+
         </List>
       </Drawer>
       <main
@@ -216,25 +217,30 @@ export default function PersistentDrawerLeft() {
         {selectedIndex === 0 ? (
           <TronLinkInfo />
         ) : selectedIndex === 1 ? (
-          <TronLinkInfo />
+          <DLiveStaking />
         ) : selectedIndex === 2 ? (
-          <TronLinkInfo />
+          <DLiveStaking />
         ) : selectedIndex === 3 ? (
           <Card className={classes.card}>
             <CardActionArea>
-              <QRCode
-                className={classes.card}
-                value={tronAddress}
-                size={320}
-                includeMargin="true"
-              />
+
 
             </CardActionArea>
           </Card>
         ) : selectedIndex === 4 ? (
-          <QRcodeReader />
+          <TronLinkInfo />
         ) : null}
       </main>
     </div>
   );
 }
+
+
+/*
+<QRCode
+  className={classes.card}
+  value={tronAddress}
+  size={320}
+  includeMargin="true"
+/>
+*/

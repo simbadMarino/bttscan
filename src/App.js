@@ -162,9 +162,9 @@ class App extends Component {
   };
 
   render() {
-    if (!this.state.tronWeb.installed) return <TronLinkGuide />;
+    //if (!this.state.tronWeb.installed) return <TronLinkGuide />;  //This will pop up the tronlink guide to install
 
-    if (!this.state.tronWeb.loggedIn) return <TronLinkGuide installed />;
+    //if (!this.state.tronWeb.loggedIn) return <TronLinkGuide installed />; //This will pop up the tronlink installed but not logged in advice
     const { fullscreen, location } = this.state;
     return (
       <Container>

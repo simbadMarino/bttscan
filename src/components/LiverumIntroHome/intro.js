@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import BTTLogo from "../files/bttscanlogo.png";
 
 
 const useStyles = makeStyles({
@@ -26,10 +27,10 @@ export default function MediaCard() {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia className={classes.media} />
+        <CardMedia className={classes.media}  />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            BitTorrent BTT token
+            Welcome to BTT Scan :)
           </Typography>
           <Typography variant="subtitle1" color="textSecondary" component="p">
             BTT hodlers will enjoy this site (I hope)
