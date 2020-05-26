@@ -31,7 +31,9 @@
         {"date": "21/05/2020","ar": 37.75,"dailyreturn":  0.103,"totaldist": 17830000,"totalstaked":17235000000},
         {"date": "22/05/2020","ar": 41.17,"dailyreturn":  0.112,"totaldist": 19520000,"totalstaked":17302000000},
         {"date": "23/05/2020","ar": 39.84,"dailyreturn":  0.109,"totaldist": 18540000,"totalstaked":16980000000},
-        {"date": "24/05/2020","ar": 40.78,"dailyreturn":  0.111,"totaldist": 19070000,"totalstaked":17110000000}
+        {"date": "24/05/2020","ar": 40.78,"dailyreturn":  0.111,"totaldist": 19070000,"totalstaked":17110000000},
+        {"date": "25/05/2020","ar": 28.18,"dailyreturn":  0.077,"totaldist": 13310000,"totalstaked":17230000000}
+
 
       ]
     }
