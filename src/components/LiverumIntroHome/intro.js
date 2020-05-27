@@ -13,11 +13,11 @@ import BTTLogo from "../files/bttscanlogo.png";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 645
+    maxWidth: 345
   },
   media: {
-    height: 200,
-    maxHeight: 450
+    height: 345,
+    maxHeight: 350
   }
 });
 
@@ -27,16 +27,16 @@ export default function MediaCard() {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia className={classes.media}  />
+        <CardMedia className={classes.media} image={BTTLogo} height = {70} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             Welcome to BTT Scan :)
           </Typography>
           <Typography variant="subtitle1" color="textSecondary" component="p">
-            BTT hodlers will enjoy this site (I hope)
+            BTT hodlers will enjoy this site
           </Typography>
           <Typography variant="subtitle2" color="textSecondary" component="p">
-            Site building in progress
+            Site building in progress...
           </Typography>
           <Typography variant="subtitle2" color="textPrimary" component="p">
             Built by TRON-BTT enthusiasts, for TRON-BTT community

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Divider from "@material-ui/core/Divider";
 import "./TronLinkInfo.scss";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+//import Button from "@material-ui/core/Button";
+//import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TronWeb from "tronweb";
 //import SunWeb from "sunweb";
-import SimpleSnackbar from "../Alerts/alerts.js";
-import Covers from "../Covers/coverSelection.js";
+//import SimpleSnackbar from "../Alerts/alerts.js";
+//import Covers from "../Covers/coverSelection.js";
 import Typography from "@material-ui/core/Typography";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -80,35 +80,52 @@ export default class TronLinkInfo extends Component {
   /*********************************Main Chain functions:*********************************************/
 
   async fetchAccountAddressMain() {
-    const account = await window.tronWeb.trx.getAccount();
-    const accountAddress = account.address; // HexString(Ascii)
-    const accountAddressInBase58 = window.tronWeb.address.fromHex(
-      accountAddress
-    ); // Base58
-    tronAddress = accountAddressInBase58;
-    this.setState({
-      accountAddressMainChain: accountAddressInBase58
-    });
+    try {
+          const account = await window.tronWeb.trx.getAccount();
+          const accountAddress = account.address; // HexString(Ascii)
+          const accountAddressInBase58 = window.tronWeb.address.fromHex(
+            accountAddress
+          ); // Base58
+          tronAddress = accountAddressInBase58;
+          this.setState({
+            accountAddressMainChain: accountAddressInBase58
+          });
+        }
+          catch( e )
+          {
+            window.alert("Tronlink is deactivated, TRON wallet functions deactivated");
+          }
+
   }
   //
   // // The function below will return the account balance in SUN as a number
   async fetchAccountBalanceMain() {
-    const balanceInSun = await window.tronWeb.trx.getBalance(); //number
-    const balanceInTRX = window.tronWeb.fromSun(balanceInSun); //string
-    const changeBackToSun = window.tronWeb.toSun(balanceInTRX); //string
+    try {
+          const balanceInSun = await window.tronWeb.trx.getBalance(); //number
+          const balanceInTRX = window.tronWeb.fromSun(balanceInSun); //string
+          const changeBackToSun = window.tronWeb.toSun(balanceInTRX); //string
 
-    this.setState({
-      accountBalanceMainChain: balanceInTRX
-    });
+          this.setState({
+            accountBalanceMainChain: balanceInTRX
+          });
+        }
+        catch (e)
+        {
+          return;
+        }
   }
   //
   // // The function below will return the account bandwidth as a number
   async fetchAccountBandwidthMain() {
-    const accountBandwidth = await window.tronWeb.trx.getBandwidth(); // number
-
-    this.setState({
-      accountBandwidthMainChain: accountBandwidth
-    });
+    try {
+          const accountBandwidth = await window.tronWeb.trx.getBandwidth(); // number
+          this.setState({
+            accountBandwidthMainChain: accountBandwidth
+          });
+        }
+        catch( e ){
+          return;
+        }
   }
 
   async getTokensBalanceMain() {
@@ -167,7 +184,7 @@ export default class TronLinkInfo extends Component {
     this.setState({
       accountTokensValueMainChain: tokenValue,
       accountTokensNameMainChain: tokenName,
-      accountNumberOfTokensMainChain: tokenQuantityPositiveBalance,
+    //  accountNumberOfTokensMainChain: tokenQuantityPositiveBalance,
       accountTokenIdsMainChain: tokenIDs
     });
 
@@ -194,9 +211,7 @@ export default class TronLinkInfo extends Component {
     return (
       <div className="tronLinkInfo-component-container">
         <Divider />
-        <Covers />
-
-        <ExpansionPanel>
+         <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
