@@ -69,3 +69,7 @@ with open('lineChart.json') as json_file:	#Opening charts data as json file...
 
 with open('lineChart_test.json', 'w') as outfile:	#Save dictionary to json file
 	json.dump(data_lineChart, outfile, indent=4)
+
+
+
+#Use this on crontab file to automate execution process(Edit your paths): */05 00 * * * cd /home/simbad/Documents/Git_Repos/bttscan/src/components/charts && /usr/bin/python3 /home/simbad/Documents/Git_Repos/bttscan/src/components/charts/web_scrapper_test.py > /tmp/listener.log 2>&1
