@@ -5,7 +5,7 @@ import re
 import json
 from datetime import date
 
-dliveStats_pre = ""
+dliveStats_pre = ""	#Initializing string
 URL = 'https://dlive.tv/s/stake'
 page = requests.get(URL)
 pp = pprint.PrettyPrinter(indent=4)
@@ -45,15 +45,27 @@ dliveDictionary =	{					#Converting dlive data into a dictionary (to be later ad
 
 ## DEBUG:pp.pprint(dliveDictionary)
 
-with open('dliveStats.json') as json_file:	#Opening charts data as json file...
-	data = json.load(json_file)				#Assigning json into a variable
+## JSON Manipulation section (dliveStats) ##
+with open('dliveStats.json') as json_file:	#Opening table data as json file...
+	data_table = json.load(json_file)				#Assigning json into a variable
 	## DEBUG:pp.pprint(data["dliveStats"][1])
 
-data["dliveStats"].append(dliveDictionary)  #Appending our new dictionary into our json (array of dictionaries)
-pp.pprint(data)
-with open('dliveStats.json', 'w') as outfile:
-	json.dump(data, outfile, indent=4)
+data_table["dliveStats"].append(dliveDictionary)  #Appending our new dictionary into our json (array of dictionaries)
+pp.pprint(data_table)
+with open('dliveStats_test.json', 'w') as outfile:	#Save dictionary to json file
+	json.dump(data_table, outfile, indent=4)
 
-#pp_pre_data = pp.pprint(pre_data)
+## JSON Manipulation section (lineChart) ##
+with open('lineChart.json') as json_file:	#Opening charts data as json file...
+	data_lineChart = json.load(json_file)   #Assigning json into a variable
+	data_lineChart["labels"].append(dliveStats_daily[0])	#Appending today's date in labels key in dictionary
+	## DEBUG: pp.pprint(data_lineChart["labels"])
+	data_lineChart["datasets"][0]["data"].append(dliveStats_daily[1])	#Appending today's ATR
+	## DEBUG: pp.pprint(data_lineChart["datasets"][0]["data"])
+	data_lineChart["datasets"][1]["data"].append(dliveStats_daily[3])	#Appending today's total distribution
+	## DEBUG: pp.pprint(data_lineChart["datasets"][1]["data"])
+	data_lineChart["datasets"][2]["data"].append(dliveStats_daily[4])	#Appending today's staked BTT
+	## DEBUG: pp.pprint(data_lineChart["datasets"][2]["data"])
 
-#print(pp_pre_data)
+with open('lineChart_test.json', 'w') as outfile:	#Save dictionary to json file
+	json.dump(data_lineChart, outfile, indent=4)

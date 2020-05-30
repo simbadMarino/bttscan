@@ -19,7 +19,7 @@ const columns = [
   { id: 'ar', label: 'ATR', minWidth: 50 },
   {
     id: 'dailyreturn',
-    label: 'Daily\u00a0Return',
+    label: 'Daily\u00a0Return (%)',
     minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
