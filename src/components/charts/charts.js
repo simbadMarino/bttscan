@@ -116,7 +116,7 @@ export default function DLiveStaking() {
        onChangeRowsPerPage={handleChangeRowsPerPage}
      />
      <div>
-    <h2>Dlive Statistics :) </h2>
+    <h2>Dlive Statistics </h2>
     <Line data={data} />
   </div>
    </Paper>
