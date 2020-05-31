@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import re
 import json
 from datetime import date
+import datetime
+from pytz import timezone
+import pytz
 
 dliveStats_pre = ""	#Initializing string
 URL = 'https://dlive.tv/s/stake'
@@ -11,7 +14,7 @@ page = requests.get(URL)
 pp = pprint.PrettyPrinter(indent=4)
 soup = BeautifulSoup(page.content, 'html.parser')					#Parsing page content
 pre_data = soup.find_all('div', class_='text-24-medium line-height-24 text-white marginl-4')	#Detecting dlive stats and parsing...
-## DEBUG:print(pre_data)
+## DEBUG: print(pre_data)
 for line in pre_data:
 	dliveStats_pre = dliveStats_pre + str(line.contents).strip("[]'\\n %MB+")
 	dliveStats_pre = dliveStats_pre + ','
@@ -26,8 +29,16 @@ dliveStats_daily[0] = int(dliveStats_daily[0])	#Total Staked BTT
 dliveStats_daily[1] = float(dliveStats_daily[1])*1000000			#Adding some 0's, meaning Billion //# TODO: Detect the letter B or M of billions/millions
 dliveStats_daily[1] = int(dliveStats_daily[1])	#Distributed BTT
 dliveStats_daily[2] = float(dliveStats_daily[2]) #APR
-today = date.today()
-date_daily = today.strftime("%d/%m/%Y")
+#today_utc = datetime.datetime.now(tz=utc)
+
+tz_NY = pytz.timezone('America/New_York')
+date_daily = datetime.datetime.now(tz_NY)
+#print("NY:", date_daily.strftime("%d/%m/%Y, %H:%M:%S"))
+date_daily = date_daily.strftime("%d/%m/%Y")
+#today_est = today_utc.astimezone(eastern)
+#datetime_NY = today_utc.strftime("%d/%m/%Y")
+#print(date_daily)
+#print(today_utc)
 daily_return = round(dliveStats_daily[2] / 365,3)
 ## DEBUG:print(date_daily)
 dliveStats_daily.append(date_daily)
@@ -69,7 +80,6 @@ with open('lineChart.json') as json_file:	#Opening charts data as json file...
 
 with open('lineChart.json', 'w') as outfile:	#Save dictionary to json file
 	json.dump(data_lineChart, outfile, indent=4)
-
 
 
 #Use this on crontab file to automate execution process(Edit your paths): */05 00 * * * cd /home/simbad/Documents/Git_Repos/bttscan/src/components/charts && /usr/bin/python3 /home/simbad/Documents/Git_Repos/bttscan/src/components/charts/web_scrapper_test.py > /tmp/listener.log 2>&1
