@@ -39,6 +39,7 @@ import Button from "@material-ui/core/Button";
 import ShareIcon from "@material-ui/icons/Share";
 import { tronAddress } from "../components/TronLinkInfo";
 import DLiveStaking from "../components/charts/charts.js";
+import TronStats from "../components/charts/tronStats.js";
 //import QRcodeReader from "../components/qrcodeReader/codeReader.js";
 import BTTlogo from "../components/files/bttscanlogo.png";
 //import QRcode from '../components/receiveBooks/qrcode_gen.js
@@ -221,12 +222,7 @@ export default function PersistentDrawerLeft() {
         ) : selectedIndex === 2 ? (
           <DLiveStaking />
         ) : selectedIndex === 3 ? (
-          <Card className={classes.card}>
-            <CardActionArea>
-
-
-            </CardActionArea>
-          </Card>
+          <TronStats />
         ) : selectedIndex === 4 ? (
           <TronLinkInfo />
         ) : null}
