@@ -52,7 +52,7 @@ with open('dliveStats.json') as json_file:	#Opening table data as json file...
 
 data_table["dliveStats"].append(dliveDictionary)  #Appending our new dictionary into our json (array of dictionaries)
 pp.pprint(data_table)
-with open('dliveStats_test.json', 'w') as outfile:	#Save dictionary to json file
+with open('dliveStats.json', 'w') as outfile:	#Save dictionary to json file
 	json.dump(data_table, outfile, indent=4)
 
 ## JSON Manipulation section (lineChart) ##
@@ -67,7 +67,7 @@ with open('lineChart.json') as json_file:	#Opening charts data as json file...
 	data_lineChart["datasets"][2]["data"].append(dliveStats_daily[4])	#Appending today's staked BTT
 	## DEBUG: pp.pprint(data_lineChart["datasets"][2]["data"])
 
-with open('lineChart_test.json', 'w') as outfile:	#Save dictionary to json file
+with open('lineChart.json', 'w') as outfile:	#Save dictionary to json file
 	json.dump(data_lineChart, outfile, indent=4)
 
 
