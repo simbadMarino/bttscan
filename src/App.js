@@ -92,27 +92,36 @@ class App extends Component {
     });
 
     if (!this.state.tronWeb.loggedIn) {
-      // Set default address (foundation address) used for contract calls
-      // Directly overwrites the address object if TronLink disabled the
-      // function call
-      window.tronWeb.defaultAddress = {
-        hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
-        base58: FOUNDATION_ADDRESS
-      };
 
-      window.tronWeb.on("addressChange", () => {
-        if (this.state.tronWeb.loggedIn) {
-          return;
+        try
+        {
+
+          // Set default address (foundation address) used for contract calls
+          // Directly overwrites the address object if TronLink disabled the
+          // function call
+          window.tronWeb.defaultAddress = {
+            hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
+            base58: FOUNDATION_ADDRESS
+          };
+
+          window.tronWeb.on("addressChange", () => {
+            if (this.state.tronWeb.loggedIn) {
+              return;
+            }
+
+            this.setState({
+              tronWeb: {
+                installed: true,
+                loggedIn: true
+              }
+            });
+          });
         }
-
-        this.setState({
-          tronWeb: {
-            installed: true,
-            loggedIn: true
-          }
-        });
-      });
-    }
+        catch( e )
+        {
+          window.alert("Tronlink is deactivated, TRON wallet functions deactivated");
+        }
+  }
 
     Utils.setTronWeb(window.tronWeb);
   }
