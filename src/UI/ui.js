@@ -16,35 +16,15 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import TuneIcon from "@material-ui/icons/Tune";
 import TronLinkInfo from "../components/TronLinkInfo";
-import BatteryCharging90Icon from '@material-ui/icons/BatteryCharging90';
-//import RecipeReviewCard from "../components/Store/Store";
-import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
-import StorefrontIcon from "@material-ui/icons/Storefront";
 import PieChartIcon from '@material-ui/icons/PieChart';
-////import LiverumBook from "../components/Library/bookUI.js";
-//import TitlebarGridList from "../components/Library/libraryUI.js";
+import StorageIcon from '@material-ui/icons/Storage';
 import HomeIcon from "@material-ui/icons/Home";
-import CallReceivedIcon from "@material-ui/icons/CallReceived";
-import SendIcon from "@material-ui/icons/Send";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import Button from "@material-ui/core/Button";
-import ShareIcon from "@material-ui/icons/Share";
-import { tronAddress } from "../components/TronLinkInfo";
 import DLiveStaking from "../components/charts/charts.js";
 import TronStats from "../components/charts/tronStats.js";
-//import QRcodeReader from "../components/qrcodeReader/codeReader.js";
+import BtfsUI from "../components/btfsbrowser/btfsUI.js";
 import BTTlogo from "../components/files/bttscanlogo.png";
-//import QRcode from '../components/receiveBooks/qrcode_gen.js
-
-var QRCode = require("qrcode.react");
+import BttScanIntro from "../components/BttScanHome/intro.js"
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -191,7 +171,18 @@ export default function PersistentDrawerLeft() {
             <ListItemIcon>
               <AccountBalanceIcon />
             </ListItemIcon>
-            <ListItemText primary="Dlive Staking" />
+            <ListItemText primary="Dlive Stats" />
+          </ListItem>
+
+          <ListItem
+            button
+            selected={selectedIndex === 2}
+            onClick={event => handleListItemClick(event, 2)}
+          >
+            <ListItemIcon>
+              <PieChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="TRON Stats" />
           </ListItem>
 
           <ListItem
@@ -200,9 +191,9 @@ export default function PersistentDrawerLeft() {
             onClick={event => handleListItemClick(event, 3)}
           >
             <ListItemIcon>
-              <PieChartIcon />
+              <StorageIcon />
             </ListItemIcon>
-            <ListItemText primary="TRON Stats" />
+            <ListItemText primary="BTFS Storage" />
           </ListItem>
 
 
@@ -216,15 +207,13 @@ export default function PersistentDrawerLeft() {
         <div className={classes.drawerHeader} />
 
         {selectedIndex === 0 ? (
-          <TronLinkInfo />
+          <BttScanIntro />
         ) : selectedIndex === 1 ? (
           <DLiveStaking />
         ) : selectedIndex === 2 ? (
-          <DLiveStaking />
-        ) : selectedIndex === 3 ? (
           <TronStats />
-        ) : selectedIndex === 4 ? (
-          <TronLinkInfo />
+        ) : selectedIndex === 3 ? (
+          <BtfsUI />
         ) : null}
       </main>
     </div>

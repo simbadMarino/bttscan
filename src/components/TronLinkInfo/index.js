@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import Divider from "@material-ui/core/Divider";
 import "./TronLinkInfo.scss";
-//import Button from "@material-ui/core/Button";
-//import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TronWeb from "tronweb";
-//import SunWeb from "sunweb";
-//import SimpleSnackbar from "../Alerts/alerts.js";
-//import Covers from "../Covers/coverSelection.js";
 import Typography from "@material-ui/core/Typography";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-//import dliveStats from "../charts/dliveStats.json";
-//import { tileData } from "../Library/bookList.js";
-//import liverumLogo from "../files/LiverumLogo.png";
-import MediaCard from "../LiverumIntroHome/intro.js";
+//import MediaCard from "../LiverumIntroHome/intro.js";
 export var tokenIDs = [];
 export var tileDataMod = [];
 export var tokenQty = [];
@@ -27,7 +19,7 @@ export var tokenQtySide = [];
 //export var sunNetworkAliveFlag = 0;
 export var tronAddress = "";
 var j = 0;
-const mainGatewayAddress = "TWaPZru6PR5VjgT4sJrrZ481Zgp3iJ8Rfo";
+//const mainGatewayAddress = "TWaPZru6PR5VjgT4sJrrZ481Zgp3iJ8Rfo";
 //const sideGatewayAddress = "TGKotco6YoULzbYisTBuP6DWXDjEgJSpYz";
 //const sideChainId = "41E209E4DE650F0150788E8EC5CAFA240A23EB8EB7";
 
@@ -45,7 +37,7 @@ export const mainchain = new TronWeb({
 
 async function myFunction(item, index) {
   for (var i = 0; i < tokenIDs.length; i++) {
-    if (tokenIDs[i] == item.tokenid) {
+    if (tokenIDs[i] === item.tokenid) {
       console.log("match in: " + i + " " + j);
       //tileDataMod[j] = tileData[index];
       console.log("Token ID: " + tokenIDs[i]);
@@ -93,7 +85,7 @@ export default class TronLinkInfo extends Component {
         }
           catch( e )
           {
-            window.alert("Tronlink is deactivated, TRON wallet functions deactivated");
+            console.log("Tronlink is deactivated, TRON wallet functions deactivated");
           }
 
   }
@@ -103,7 +95,7 @@ export default class TronLinkInfo extends Component {
     try {
           const balanceInSun = await window.tronWeb.trx.getBalance(); //number
           const balanceInTRX = window.tronWeb.fromSun(balanceInSun); //string
-          const changeBackToSun = window.tronWeb.toSun(balanceInTRX); //string
+          //const changeBackToSun = window.tronWeb.toSun(balanceInTRX); //string
 
           this.setState({
             accountBalanceMainChain: balanceInTRX
@@ -162,7 +154,7 @@ export default class TronLinkInfo extends Component {
                     return el != null;
                 });*/
     } catch (e) {
-      window.alert("No TokenBooks found in wallet, please check");
+      console.log("No TokenBooks found in wallet, please check");
     }
     tokenName = tokenName.filter(function(el) {
       return el != null;
@@ -203,10 +195,10 @@ export default class TronLinkInfo extends Component {
       accountAddressMainChain,
       accountBalanceMainChain,
       accountBandwidthMainChain,
-      accountTokensValueMainChain,
-      accountTokensNameMainChain,
-      accountNumberOfTokensMainChain,
-      accountTokenIdsMainChain
+      //accountTokensValueMainChain,
+      //accountTokensNameMainChain,
+      //accountNumberOfTokensMainChain,
+      //accountTokenIdsMainChain
     } = this.state;
     return (
       <div className="tronLinkInfo-component-container">
@@ -217,7 +209,7 @@ export default class TronLinkInfo extends Component {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className="heading">BitTorrent Address</Typography>
+            <Typography className="heading">BTFS Address</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
@@ -233,7 +225,6 @@ export default class TronLinkInfo extends Component {
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <MediaCard />
       </div>
     );
   }

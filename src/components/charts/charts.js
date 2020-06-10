@@ -11,16 +11,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import dliveStats from "../charts/dliveStats.json";
 import lineStats from "../charts/lineChart.json";
-//import { rows } from "../TronLinkInfo/index.js";
-//import {rows} from "../components/TronLinkInfo";
 
 const columns = [
   { id: 'date', label: 'Date', minWidth: 50 },
-  { id: 'ar', label: 'ATR', minWidth: 50 },
+  { id: 'ar', label: 'ATR', minWidth: 50, maxWidth: 65 },
   {
     id: 'dailyreturn',
     label: 'Daily\u00a0Return (%)',
     minWidth: 100,
+    maxWidth: 120,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
@@ -44,7 +43,7 @@ const rows = dliveStats;
 
 const useStyles = makeStyles({
   root: {
-    width: '80%',
+    width: '90%',
   },
   container: {
     maxHeight: 640,

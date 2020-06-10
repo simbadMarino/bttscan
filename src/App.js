@@ -1,25 +1,17 @@
 import React, { Component } from "react";
-import TronWeb from "tronweb";
-import SunWeb from "sunweb";
 import "typeface-roboto"; //Importing roboto font
-//import Button from '@material-ui/core/Button';  //Importing material button
 import Utils from "./utils";
-import TronLinkInfo from "./components/TronLinkInfo";
-import TronLinkGuide from "./components/TronLinkGuide";
 import PersistentDrawerLeft from "./UI/ui.js";
-//import "./App.scss";
-import { createGlobalStyle } from "styled-components";
-//import { ReactReader } from "./modules";
 import {
   Container,
-  ReaderContainer,
-  Bar,
-  Logo,
-  CloseButton,
-  CloseIcon,
-  FontSizeButton
+  //ReaderContainer,
+  //Bar,
+  //Logo,
+  //CloseButton,
+  //CloseIcon,
+  //FontSizeButton
 } from "./Components";
-var title = "";
+//var title = "";
 const storage = global.localStorage || null;
 
 const FOUNDATION_ADDRESS = "TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg";
@@ -33,10 +25,6 @@ class App extends Component {
         loggedIn: false
       },
       fullscreen: false,
-      location:
-        storage && storage.getItem("epub-location")
-          ? storage.getItem("epub-location")
-          : 2,
       largeText: false
     };
     this.rendition = null;
@@ -80,7 +68,7 @@ class App extends Component {
 
         if (!tronWebState.installed) {
           return tries++;
-          console.log("Retries: " + tries);
+        //  console.log("Retries: " + tries);
         }
 
         this.setState({
@@ -119,7 +107,7 @@ class App extends Component {
         }
         catch( e )
         {
-          window.alert("Tronlink is deactivated, TRON wallet functions deactivated");
+          console.log("Tronlink is deactivated, TRON wallet functions deactivated");
         }
   }
 
@@ -174,7 +162,7 @@ class App extends Component {
     //if (!this.state.tronWeb.installed) return <TronLinkGuide />;  //This will pop up the tronlink guide to install
 
     //if (!this.state.tronWeb.loggedIn) return <TronLinkGuide installed />; //This will pop up the tronlink installed but not logged in advice
-    const { fullscreen, location } = this.state;
+    //const { fullscreen, location } = this.state;
     return (
       <Container>
         <PersistentDrawerLeft />
