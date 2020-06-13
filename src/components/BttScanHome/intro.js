@@ -57,6 +57,7 @@ export default function BttScanIntro() {
         <Typography variant="body2" color="textSecondary" component="p">
         "If you think you are too small to make a difference, try sleeping with a mosquito" - Dalai Lama
         </Typography>
+
       </CardContent>
     </CardActionArea>
     <CardActions>
@@ -67,6 +68,9 @@ export default function BttScanIntro() {
           Learn More
       </Button>
     </CardActions>
+  <p>If you find this site useful please consider donating to keep up the development and hosting costs ;)</p>
+  <h4>TRON: TRxrmHDysqAMHNo2eEtSvcMoJpDnWLqnZ4</h4>
+  <h4>Monero: 47NKoanX7vhTDEjQPiUDbTQC22MnQBhbo5QJbVVMKNEMQi1WrJp44B47uhtpfFy1FRYP6W5chRdYJ3YWSJEfhnAzEqfPym1</h4>
 
 </Paper>
   );

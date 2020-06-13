@@ -7,9 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
 
-var perBR = "29.01%";
-var perVR = "63.38%";
-var perFB = "7.61%";
+
+var perFB = "7.48%";
+var perVR = "63.93%";
+var perBR = "28.58%";
+
 const useStyles = makeStyles({
   root: {
     width: '90%',
@@ -32,21 +34,23 @@ const legendOpts = {
 const data = {
 
   labels: [
-    'Block Rewards: '+ perBR,
+    'Fee Burned: '+ perFB,
     'Voting Rewards: '+ perVR,
-    'Fee Burned: '+ perFB
+    'Block Rewards: '+ perBR
+
   ],
   datasets: [{
-    data: [555346416, 1227937840,145543510.991],
+    data: [122137, 4529920, 452992],
     backgroundColor: [
-    '#FA5858',
+    '#9FF781',
     '#FFCE56',
-    '#9FF781'
+    '#FA5858'
+
     ],
     hoverBackgroundColor: [
-    '#FF0000',
+    '#40FF00',
     '#FACC2E',
-    '#40FF00'
+    '#FF0000'
     ]
   }]
 };
@@ -61,9 +65,9 @@ export default function TronsStats(){
     return (
       <Paper className={classes.root}>
         <div>
-          <h2>TRX Minting Status</h2>
+          <h2>TRX Current Minting Status</h2>
           <Doughnut data={data} legend={legendOpts}/>
-          <h2>TRX Supply Stats (&Delta; changes)</h2>
+          <h2>TRX Minting History</h2>
           <Line data={data2} />
         </div>
         </Paper>

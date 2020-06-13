@@ -108,6 +108,7 @@ class App extends Component {
         catch( e )
         {
           console.log("Tronlink is deactivated, TRON wallet functions deactivated");
+          
         }
   }
 

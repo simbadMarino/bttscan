@@ -14,6 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+pp = pprint.PrettyPrinter(indent=4)
 options = Options()
 options.headless = True
 options.add_argument("--window-size=1920,1200")
@@ -43,31 +44,22 @@ current_Block_Rewards = driver.find_element_by_xpath("//*[@id='root']/main/div/d
 
 
 
+current_TRX_burned = current_TRX_burned.text.strip("TRX")
+current_TRX_burned = current_TRX_burned.replace(",","")
 
-print("TRX burned: "+ current_TRX_burned.text)
-print("Voting rewards: " + current_Voting_Rewards.text)
-print("Block rewards: " + current_Block_Rewards.text)
+current_Voting_Rewards = current_Voting_Rewards.text.strip("TRX")
+current_Voting_Rewards = current_Voting_Rewards.replace(",","")
+
+current_Block_Rewards = current_Block_Rewards.text.strip("TRX")
+current_Block_Rewards = current_Block_Rewards.replace(",","")
+print("Today TRX burned: "+ current_TRX_burned)
+print("Today Voting rewards: " + current_Voting_Rewards)
+print("Today Block rewards: " + current_Block_Rewards)
+
+
 driver.quit()
-#page = driver.page_source
-#pp = pprint.PrettyPrinter(indent=4)
-#soup = BeautifulSoup(page)					#Parsing page content
-#print(soup)
-#pre_data = soup.find_all('table',class_ ='table')	#Detecting tron stats and parsing...
-#print(pre_data)
-"""for line in pre_data:
-	dliveStats_pre = dliveStats_pre + str(line.contents).strip("[]'\\n %MB+")
-	dliveStats_pre = dliveStats_pre + ','
-	## DEBUG:print(line.contents)
-## DEBUG:print("Line")
-dliveStats_daily = dliveStats_pre.split(',')						#Converting to array by adding ',' instead of NewLine(\n)
-## DEBUG: print(dliveStats_daily)
-dliveStats_daily.pop(0)												#Remove personal staking BTT
-dliveStats_daily.pop(3)												#Removing empty value
-dliveStats_daily[0] = float(dliveStats_daily[0])*1000000000			#Adding some 0's, meaning Billion //# TODO: Detect the letter B or M of billions/millions
-dliveStats_daily[0] = int(dliveStats_daily[0])	#Total Staked BTT
-dliveStats_daily[1] = float(dliveStats_daily[1])*1000000			#Adding some 0's, meaning Billion //# TODO: Detect the letter B or M of billions/millions
-dliveStats_daily[1] = int(dliveStats_daily[1])	#Distributed BTT
-dliveStats_daily[2] = float(dliveStats_daily[2]) #APR
+
+
 #today_utc = datetime.datetime.now(tz=utc)
 
 tz_NY = pytz.timezone('America/New_York')
@@ -76,32 +68,45 @@ date_daily = datetime.datetime.now(tz_NY)
 date_daily = date_daily.strftime("%d/%m/%Y")
 #today_est = today_utc.astimezone(eastern)
 #datetime_NY = today_utc.strftime("%d/%m/%Y")
-#print(date_daily)
+print(date_daily)
 #print(today_utc)
-daily_return = round(dliveStats_daily[2] / 365,3)
-## DEBUG:print(date_daily)
-dliveStats_daily.append(date_daily)
-dliveStats_daily.reverse()
-dliveStats_daily.insert(2,daily_return)
-## DEBUG:print(dliveStats_daily)
 
-dliveDictionary =	{					#Converting dlive data into a dictionary (to be later added to our json file)
-  "date": dliveStats_daily[0],
-  "ar": dliveStats_daily[1],
-  "dailyreturn": dliveStats_daily[2],
-  "totaldist": dliveStats_daily[3],
-  "totalstaked": dliveStats_daily[4]
-}
-"""
+
+
 ## DEBUG:pp.pprint(dliveDictionary)
-"""
-## JSON Manipulation section (dliveStats) ##
-with open('dliveStats.json') as json_file:	#Opening table data as json file...
-	data_table = json.load(json_file)				#Assigning json into a variable
-	## DEBUG:pp.pprint(data["dliveStats"][1])
 
-data_table["dliveStats"].append(dliveDictionary)  #Appending our new dictionary into our json (array of dictionaries)
-pp.pprint(data_table)
+## JSON Manipulation section (dliveStats) ##
+with open('trx_supply_data.json') as json_file:	#Opening table data as json file...
+    data_array = []
+    data = json.load(json_file)				#Assigning json into a variable
+    burn_data_lenght = len(data["datasets"][0]["data"])
+    #data_lenght = len(data_array)
+    #print("Fee burned data length: " + str(burn_data_lenght))
+    ystdy_fee_brnd = str(data["datasets"][0]["data"][burn_data_lenght-1])  #Getting last record of fee burned TRX data
+    print("Fee burned TRX from yesterday: " + ystdy_fee_brnd)
+
+
+    vote_data_lenght = len(data["datasets"][1]["data"])
+    #data_lenght = len(data_array)
+    #print("Vote rewards data length: " + str(vote_data_lenght))
+    ystdy_vote_rwrds = str(data["datasets"][1]["data"][vote_data_lenght-1])  #Getting last record of fee burned TRX data
+    print("Vote rewards from yesterday: " + ystdy_vote_rwrds)
+
+    block_data_lenght = len(data["datasets"][2]["data"])
+    #data_lenght = len(data_array)
+    #print("Vote rewards data length: " + str(vote_data_lenght))
+    ystdy_block_rwrds = str(data["datasets"][2]["data"][block_data_lenght-1])  #Getting last record of fee burned TRX data
+    print("Block rewards from yesterday: " + ystdy_block_rwrds)
+
+
+data["labels"].append(date_daily)   #Appending current date
+data["datasets"][0]["data"].append(round(float(current_TRX_burned)))  #Appending today's fee brned TRX
+data["datasets"][1]["data"].append(int(current_Voting_Rewards))  #Appending today's vote rewards TRX
+data["datasets"][2]["data"].append(int(current_Block_Rewards))  #Appending today's block rewards TRX
+
+
+pp.pprint(data)
+"""
 with open('dliveStats.json', 'w') as outfile:	#Save dictionary to json file
 	json.dump(data_table, outfile, indent=4)
 
