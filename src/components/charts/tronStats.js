@@ -9,8 +9,8 @@ import Paper from '@material-ui/core/Paper';
 
 
 var perFB = "7.48%";
-var perVR = "63.93%";
-var perBR = "28.58%";
+var perVR = "63.99%";
+var perBR = "28.52%";
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 const legendOpts = {
   display: true,
-  position: 'right',
+  position: 'bottom',
   fullWidth: true,
   reverse: false,
   /*labels: {
@@ -40,7 +40,7 @@ const data = {
 
   ],
   datasets: [{
-    data: [122137, 4529920, 452992],
+    data: [146244870, 1247965840, 557649216],
     backgroundColor: [
     '#9FF781',
     '#FFCE56',

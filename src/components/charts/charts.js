@@ -43,7 +43,7 @@ const rows = dliveStats;
 
 const useStyles = makeStyles({
   root: {
-    width: '90%',
+    width: '95%',
   },
   container: {
     maxHeight: 640,
