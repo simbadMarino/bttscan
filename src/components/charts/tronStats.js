@@ -34,9 +34,9 @@ const legendOpts = {
 const data = {
 
   labels: [
-    'Fee Burned: '+ perFB,
-    'Voting Rewards: '+ perVR,
-    'Block Rewards: '+ perBR
+    'Fee Burned',
+    'Voting Rewards',
+    'Block Rewards'
 
   ],
   datasets: [{
