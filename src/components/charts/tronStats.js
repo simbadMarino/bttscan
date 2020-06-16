@@ -40,7 +40,7 @@ const data = {
 
   ],
   datasets: [{
-    data: [146310761, 1255574800, 558110112],
+    data: [146389197, 1260172880, 558569920],
     backgroundColor: [
     '#9FF781',
     '#FFCE56',
@@ -65,9 +65,9 @@ export default function TronsStats(){
     return (
       <Paper className={classes.root}>
         <div>
-          <h2>TRX Current Minting Status</h2>
+          <h2>Cumulative TRX Minting </h2>
           <Doughnut data={data} legend={legendOpts}/>
-          <h2>TRX Minting History</h2>
+          <h2>Daily TRX Minting</h2>
           <Line data={data2} />
         </div>
         </Paper>
