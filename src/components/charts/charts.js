@@ -11,6 +11,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import dliveStats from "../charts/dliveStats.json";
 import lineStats from "../charts/lineChart.json";
+import dliveStatsPartners from "../charts/dliveStatsPartners.json";
+import lineStatsPartners from "../charts/lineChartPartners.json";
 
 const columns = [
   { id: 'date', label: 'Date', minWidth: 50 },
@@ -40,6 +42,7 @@ const columns = [
 ];
 
 const rows = dliveStats;
+const rowsPartners = dliveStatsPartners;
 
 const useStyles = makeStyles({
   root: {
@@ -53,6 +56,7 @@ const useStyles = makeStyles({
 
 
 const data = lineStats;
+const dataPartners = lineStatsPartners;
 
 export default function DLiveStaking() {
 
@@ -71,7 +75,9 @@ export default function DLiveStaking() {
 
     return (
 
-      <Paper className={classes.root}>
+  <Paper className={classes.root}>
+    <h1>Dlive Statistics </h1>
+    <h2>BTT Holders Table </h2>
      <TableContainer className={classes.container}>
        <Table stickyHeader aria-label="sticky table">
          <TableHead>
@@ -115,9 +121,57 @@ export default function DLiveStaking() {
        onChangeRowsPerPage={handleChangeRowsPerPage}
      />
      <div>
-    <h2>Dlive Statistics </h2>
+    <h2>BTT Holders Line</h2>
     <Line data={data} />
   </div>
+
+  <h2>Dlive Partners Table </h2>
+   <TableContainer className={classes.container}>
+     <Table stickyHeader aria-label="sticky table">
+       <TableHead>
+         <TableRow>
+           {columns.map((column) => (
+             <TableCell
+               key={column.id}
+               align={column.align}
+               style={{ minWidth: column.minWidth }}
+             >
+               {column.label}
+             </TableCell>
+           ))}
+         </TableRow>
+       </TableHead>
+       <TableBody>
+         {rowsPartners.dliveStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+           return (
+             <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+               {columns.map((column) => {
+                 const value = row[column.id];
+                 return (
+                   <TableCell key={column.id} align={column.align}>
+                     {column.format && typeof value === 'number' ? column.format(value) : value}
+                   </TableCell>
+                 );
+               })}
+             </TableRow>
+           );
+         })}
+       </TableBody>
+     </Table>
+   </TableContainer>
+   <TablePagination
+     rowsPerPageOptions={[10, 25, 100]}
+     component="div"
+     count={rowsPartners.dliveStats.length}
+     rowsPerPage={rowsPerPage}
+     page={page}
+     onChangePage={handleChangePage}
+     onChangeRowsPerPage={handleChangeRowsPerPage}
+   />
+   <div>
+  <h2>Dlive Partners Line</h2>
+  <Line data={dataPartners} />
+</div>
    </Paper>
 );
 };

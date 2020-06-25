@@ -17,6 +17,7 @@ from selenium.webdriver.common.by import By
 pp = pprint.PrettyPrinter(indent=4)
 options = Options()
 options.headless = True
+
 options.add_argument("--window-size=1920,1200")
 options.binary_location = "/usr/bin/google-chrome"
 DRIVER_PATH = '/home/simbad/Documents/Git_Repos/bttscan/src/components/charts/chromedriver'

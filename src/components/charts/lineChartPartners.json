@@ -1,0 +1,90 @@
+{
+    "labels": [
+        "21/06/2020",
+        "22/06/2020",
+        "23/06/2020",
+        "24/06/2020"
+    ],
+    "datasets": [
+        {
+            "label": "Partners APR ",
+            "fill": true,
+            "lineTension": 0.1,
+            "backgroundColor": "yellow",
+            "borderColor": "yellow",
+            "borderCapStyle": "butt",
+            "borderDash": [],
+            "borderDashOffset": 0.0,
+            "borderJoinStyle": "miter",
+            "pointBorderColor": "rgba(35,80,192,1)",
+            "pointBackgroundColor": "#fff",
+            "pointBorderWidth": 1,
+            "pointHoverRadius": 5,
+            "pointHoverBackgroundColor": "rgba(35,80,192,1)",
+            "pointHoverBorderColor": "rgba(220,220,220,1)",
+            "pointHoverBorderWidth": 2,
+            "pointRadius": 4,
+            "pointHitRadius": 10,
+            "data": [
+                474.56,
+                345.86,
+                340.67,
+                324.52
+            ]
+        },
+        {
+            "label": "BTT Distribution ",
+            "fill": false,
+            "lineTension": 0.1,
+            "backgroundColor": "rgba(15,80,80,0.4)",
+            "borderColor": "black",
+            "borderCapStyle": "butt",
+            "borderDash": [],
+            "borderDashOffset": 0.0,
+            "borderJoinStyle": "miter",
+            "pointBorderColor": "rgba(15,80,80,1)",
+            "pointBackgroundColor": "#fff",
+            "pointBorderWidth": 1,
+            "pointHoverRadius": 5,
+            "pointHoverBackgroundColor": "rgba(15,80,80,1)",
+            "pointHoverBorderColor": "rgba(20,80,220,1)",
+            "pointHoverBorderWidth": 2,
+            "pointRadius": 4,
+            "showLine": true,
+            "pointHitRadius": 10,
+            "data": [
+                3150000,
+                2620000,
+                2860000,
+                3000000
+            ]
+        },
+        {
+            "label": "BTT Staking",
+            "fill": true,
+            "lineTension": 0.1,
+            "backgroundColor": "rgba(15,92,50,0.4)",
+            "borderColor": "green",
+            "borderCapStyle": "butt",
+            "borderDash": [],
+            "borderDashOffset": 0.0,
+            "borderJoinStyle": "miter",
+            "pointBorderColor": "rgba(75,192,192,1)",
+            "pointBackgroundColor": "#fff",
+            "pointBorderWidth": 1,
+            "pointHoverRadius": 5,
+            "pointHoverBackgroundColor": "rgba(75,192,192,1)",
+            "pointHoverBorderColor": "rgba(220,220,220,1)",
+            "pointHoverBorderWidth": 2,
+            "pointRadius": 4,
+            "showLine": true,
+            "pointHitRadius": 10,
+            "data": [
+                255480000,
+                294260000,
+                328110000,
+                364230000
+            ]
+        }
+    ]
+}

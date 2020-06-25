@@ -1,4 +1,10 @@
 node_modules/
-/home/simbad/Documents/Git_Repos/bttscan/src/components/charts/lineTronStats.json
-/home/simbad/Documents/Git_Repos/bttscan/src/components/charts/lineChart.json
-/home/simbad/Documents/Git_Repos/bttscan/src/components/charts/dliveStats.json
+src/components/charts/lineTronStats.json
+src/components/charts/lineChart.json
+src/components/charts/dliveStats.json
+src/components/charts/web_scrapper_tron.py
+src/components/charts/trx_supply_data.json
+src/components/charts/lineTronStats.json
+src/components/charts/lineChart.json
+src/components/charts/dliveStats.json
+

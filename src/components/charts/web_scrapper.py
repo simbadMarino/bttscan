@@ -7,79 +7,153 @@ from datetime import date
 import datetime
 from pytz import timezone
 import pytz
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+import time
 
-dliveStats_pre = ""	#Initializing string
-URL = 'https://dlive.tv/s/stake'
-page = requests.get(URL)
 pp = pprint.PrettyPrinter(indent=4)
-soup = BeautifulSoup(page.content, 'html.parser')					#Parsing page content
-pre_data = soup.find_all('div', class_='text-24-medium line-height-24 text-white marginl-4')	#Detecting dlive stats and parsing...
-## DEBUG: print(pre_data)
-for line in pre_data:
-	dliveStats_pre = dliveStats_pre + str(line.contents).strip("[]'\\n %MB+")
-	dliveStats_pre = dliveStats_pre + ','
-	## DEBUG:print(line.contents)
-## DEBUG:print("Line")
-dliveStats_daily = dliveStats_pre.split(',')						#Converting to array by adding ',' instead of NewLine(\n)
-## DEBUG: print(dliveStats_daily)
-dliveStats_daily.pop(0)												#Remove personal staking BTT
-dliveStats_daily.pop(3)												#Removing empty value
-dliveStats_daily[0] = float(dliveStats_daily[0])*1000000000			#Adding some 0's, meaning Billion //# TODO: Detect the letter B or M of billions/millions
-dliveStats_daily[0] = int(dliveStats_daily[0])	#Total Staked BTT
-dliveStats_daily[1] = float(dliveStats_daily[1])*1000000			#Adding some 0's, meaning Billion //# TODO: Detect the letter B or M of billions/millions
-dliveStats_daily[1] = int(dliveStats_daily[1])	#Distributed BTT
-dliveStats_daily[2] = float(dliveStats_daily[2]) #APR
-#today_utc = datetime.datetime.now(tz=utc)
+options = Options()
+options.headless = True
 
-tz_NY = pytz.timezone('America/New_York')
-date_daily = datetime.datetime.now(tz_NY)
-#print("NY:", date_daily.strftime("%d/%m/%Y, %H:%M:%S"))
-date_daily = date_daily.strftime("%d/%m/%Y")
-#today_est = today_utc.astimezone(eastern)
-#datetime_NY = today_utc.strftime("%d/%m/%Y")
-#print(date_daily)
-#print(today_utc)
-daily_return = round(dliveStats_daily[2] / 365,3)
-## DEBUG:print(date_daily)
-dliveStats_daily.append(date_daily)
-dliveStats_daily.reverse()
-dliveStats_daily.insert(2,daily_return)
-## DEBUG:print(dliveStats_daily)
+options.add_argument("--window-size=1920,1200")
+options.binary_location = "/usr/bin/google-chrome"
+DRIVER_PATH = '/home/simbad/Documents/Git_Repos/bttscan/src/components/charts/chromedriver'
+driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+#all_links = driver.find_elements_by_tag_name('a')
+#/html/body/div/main/div/div/div/div/div/div/div[1]/div[1]/table/tbody/tr[5]/td[2]
 
-dliveDictionary =	{					#Converting dlive data into a dictionary (to be later added to our json file)
-  "date": dliveStats_daily[0],
-  "ar": dliveStats_daily[1],
-  "dailyreturn": dliveStats_daily[2],
-  "totaldist": dliveStats_daily[3],
-  "totalstaked": dliveStats_daily[4]
+#//*[@id="root"]/main/div/div/div/div/div/div/div[1]/div[1]/table/tbody/tr[5]/td[2]/text()[1]
+#dliveStats_pre = ""	#Initializing string
+driver.get('https://dlive.tv/s/stake')
+time.sleep(5)	#Wait for page to load
+timeout = 6
+try:
+    element_present = EC.presence_of_element_located((By.XPATH, "//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/div"))
+    WebDriverWait(driver, timeout).until(element_present)
+except TimeoutException:
+    print("Timed out waiting for page to load")
+finally:
+	print("Page loaded")
+	totalBTTStaked = driver.find_element_by_xpath("//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/div")
+	totalBTTStaked = totalBTTStaked.text.strip("B")
+	#print(totalBTTStaked)
+	distributedBTT = driver.find_element_by_xpath("//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[2]/div[2]/div[1]/div")
+	distributedBTT = distributedBTT.text.strip("M")
+
+	arBTT = driver.find_element_by_xpath("//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[3]/div[2]/div[1]/div")
+	arBTT = arBTT.text.strip("+%")
+
+
+
+	totalPartnersBTTStaked = driver.find_element_by_xpath("//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[4]/div[2]/div[1]/div")
+	totalPartnersBTTStaked = totalPartnersBTTStaked.text.strip("MB")
+	#print(totalBTTStaked)
+	distributedPartnersBTT = driver.find_element_by_xpath("//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[5]/div[2]/div[1]/div")
+	distributedPartnersBTT = distributedPartnersBTT.text.strip("MB")
+
+	arPartnersBTT = driver.find_element_by_xpath("//*[@id='router-view']/div/div[3]/div[2]/div[2]/div[2]/div[6]/div[2]/div[1]/div")
+	arPartnersBTT = arPartnersBTT.text.strip("+%")
+
+	print("Total Staked BTT: "+ totalBTTStaked)
+	print("Distributed BTT: " + distributedBTT)
+	print("dLive Staking APR: " + arBTT)
+	print("Total Partners Staked BTT: "+ totalPartnersBTTStaked)
+	print("Distributed Partners BTT: " + distributedPartnersBTT)
+	print("dLive Partners Staking APR: " + arPartnersBTT)
+
+	driver.quit()
+	tz_NY = pytz.timezone('America/New_York')
+	date_daily = datetime.datetime.now(tz_NY)
+	date_daily = date_daily.strftime("%d/%m/%Y")
+	print(date_daily)
+
+	totalBTTStaked = float(totalBTTStaked) * 1000000000
+	distributedBTT = float(distributedBTT) * 1000000
+	arBTT = float(arBTT)
+	dailyReturn = round(arBTT / 365,3)
+
+	totalPartnersBTTStaked = float(totalPartnersBTTStaked) * 1000000
+	distributedPartnersBTT = float(distributedPartnersBTT) * 1000000
+	arPartnersBTT = float(arPartnersBTT)
+	dailyPartnerReturn = round(arPartnersBTT / 365,3)
+
+
+
+
+dliveBTTDictionary =	{					#Converting dlive data into a dictionary (to be later added to our json file)
+  "date": date_daily,
+  "ar": arBTT,
+  "dailyreturn": dailyReturn,
+  "totaldist": distributedBTT,
+  "totalstaked": totalBTTStaked
 }
 
-## DEBUG:pp.pprint(dliveDictionary)
+dlivePartnersDictionary =	{					#Converting dlive data into a dictionary (to be later added to our json file)
+  "date": date_daily,
+  "ar": arPartnersBTT,
+  "dailyreturn": dailyPartnerReturn,
+  "totaldist": distributedPartnersBTT,
+  "totalstaked": totalPartnersBTTStaked
+}
 
+pp.pprint(dliveBTTDictionary)
+pp.pprint(dlivePartnersDictionary)
+
+#-------BTT Holders SEction------------------------------
 ## JSON Manipulation section (dliveStats) ##
 with open('dliveStats.json') as json_file:	#Opening table data as json file...
-	data_table = json.load(json_file)				#Assigning json into a variable
+	data_BTTtable = json.load(json_file)				#Assigning json into a variable
 	## DEBUG:pp.pprint(data["dliveStats"][1])
 
-data_table["dliveStats"].append(dliveDictionary)  #Appending our new dictionary into our json (array of dictionaries)
-pp.pprint(data_table)
+data_BTTtable["dliveStats"].append(dliveBTTDictionary)  #Appending our new dictionary into our json (array of dictionaries)
+pp.pprint(data_BTTtable)
 with open('dliveStats.json', 'w') as outfile:	#Save dictionary to json file
-	json.dump(data_table, outfile, indent=4)
+	json.dump(data_BTTtable, outfile, indent=4)
 
 ## JSON Manipulation section (lineChart) ##
 with open('lineChart.json') as json_file:	#Opening charts data as json file...
-	data_lineChart = json.load(json_file)   #Assigning json into a variable
-	data_lineChart["labels"].append(dliveStats_daily[0])	#Appending today's date in labels key in dictionary
+	data_BTTlineChart = json.load(json_file)   #Assigning json into a variable
+	data_BTTlineChart["labels"].append(date_daily)	#Appending today's date in labels key in dictionary
 	## DEBUG: pp.pprint(data_lineChart["labels"])
-	data_lineChart["datasets"][0]["data"].append(dliveStats_daily[1])	#Appending today's ATR
+	data_BTTlineChart["datasets"][0]["data"].append(arBTT)	#Appending today's ATR
 	## DEBUG: pp.pprint(data_lineChart["datasets"][0]["data"])
-	data_lineChart["datasets"][1]["data"].append(dliveStats_daily[3])	#Appending today's total distribution
+	data_BTTlineChart["datasets"][1]["data"].append(distributedBTT)	#Appending today's total distribution
 	## DEBUG: pp.pprint(data_lineChart["datasets"][1]["data"])
-	data_lineChart["datasets"][2]["data"].append(dliveStats_daily[4])	#Appending today's staked BTT
+	data_BTTlineChart["datasets"][2]["data"].append(totalBTTStaked)	#Appending today's staked BTT
 	## DEBUG: pp.pprint(data_lineChart["datasets"][2]["data"])
 
 with open('lineChart.json', 'w') as outfile:	#Save dictionary to json file
-	json.dump(data_lineChart, outfile, indent=4)
+	json.dump(data_BTTlineChart, outfile, indent=4)
 
 
+#------------Partners Section--------------
+
+## JSON Manipulation section (dliveStats) ##
+with open('dliveStatsPartners.json') as json_file:	#Opening table data as json file...
+	data_Partnerstable = json.load(json_file)				#Assigning json into a variable
+	## DEBUG:pp.pprint(data["dliveStats"][1])
+
+data_Partnerstable["dliveStats"].append(dlivePartnersDictionary)  #Appending our new dictionary into our json (array of dictionaries)
+pp.pprint(data_Partnerstable)
+with open('dliveStatsPartners.json', 'w') as outfile:	#Save dictionary to json file
+	json.dump(data_Partnerstable, outfile, indent=4)
+
+## JSON Manipulation section (lineChart) ##
+with open('lineChartPartners.json') as json_file:	#Opening charts data as json file...
+	data_PartnerslineChart = json.load(json_file)   #Assigning json into a variable
+	data_PartnerslineChart["labels"].append(date_daily)	#Appending today's date in labels key in dictionary
+	## DEBUG: pp.pprint(data_lineChart["labels"])
+	data_PartnerslineChart["datasets"][0]["data"].append(arPartnersBTT)	#Appending today's ATR
+	## DEBUG: pp.pprint(data_lineChart["datasets"][0]["data"])
+	data_PartnerslineChart["datasets"][1]["data"].append(distributedPartnersBTT)	#Appending today's total distribution
+	## DEBUG: pp.pprint(data_lineChart["datasets"][1]["data"])
+	data_PartnerslineChart["datasets"][2]["data"].append(totalPartnersBTTStaked)	#Appending today's staked BTT
+	## DEBUG: pp.pprint(data_lineChart["datasets"][2]["data"])
+
+with open('lineChartPartners.json', 'w') as outfile:	#Save dictionary to json file
+	json.dump(data_PartnerslineChart, outfile, indent=4)
 #Use this on crontab file to automate execution process(Edit your paths): */05 00 * * * cd /home/simbad/Documents/Git_Repos/bttscan/src/components/charts && /usr/bin/python3 /home/simbad/Documents/Git_Repos/bttscan/src/components/charts/web_scrapper_test.py > /tmp/listener.log 2>&1

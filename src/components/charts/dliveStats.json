@@ -251,6 +251,41 @@
             "dailyreturn": 0.112,
             "totaldist": 19580000,
             "totalstaked": 17550000000
+        },
+        {
+            "date": "25/06/2020",
+            "ar": 23.13,
+            "dailyreturn": 0.063,
+            "totaldist": 12030000.0,
+            "totalstaked": 19060000000.0
+        },
+        {
+            "date": "25/06/2020",
+            "ar": 23.13,
+            "dailyreturn": 0.063,
+            "totaldist": 12030000.0,
+            "totalstaked": 19060000000.0
+        },
+        {
+            "date": "25/06/2020",
+            "ar": 23.13,
+            "dailyreturn": 0.063,
+            "totaldist": 12030000.0,
+            "totalstaked": 19060000000.0
+        },
+        {
+            "date": "25/06/2020",
+            "ar": 23.13,
+            "dailyreturn": 0.063,
+            "totaldist": 12030000.0,
+            "totalstaked": 19060000000.0
+        },
+        {
+            "date": "25/06/2020",
+            "ar": 23.13,
+            "dailyreturn": 0.063,
+            "totaldist": 12030000.0,
+            "totalstaked": 19060000000.0
         }
     ]
 }
