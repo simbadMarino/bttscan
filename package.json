@@ -69,7 +69,7 @@
     "react-swipeable": "^5.4.0",
     "sunweb": "^1.1.0",
     "sweetalert2": "^8.5.0",
-    "tronweb": "^2.3.4",
+    "tronweb": "^6.0.2",
     "typeface-roboto": "0.0.75"
   },
   "peerDependencies": {
